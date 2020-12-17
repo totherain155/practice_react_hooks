@@ -1,14 +1,38 @@
-import React from 'react';
+import React from "react";
+import ReactDOM from "react-dom";
+
+// useConfirm 사용하여 console에 message 띄우기
+
+const useConfirm = (message = "", onConfirm, onCancel) => {
+
+    const confirmAction = () => {
+        if (window.confirm(message)) {
+            onConfirm()
+        } else {
+            onCancel()
+        }
+
+    }
+    return confirmAction
+}
 
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+const App = () => {
+    const deleteSome = () => {
+        console.log('good bye!')
+    }
+    const stopOver = () => {
+        console.log('stop_over')
+    }
+    const deleteSomething = useConfirm("Are you sure to quit?", deleteSome, stopOver)
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+    return (
+        <div>
+            <button onClick={deleteSomething}>DeleteButton</button>
+        </div>
+    )
+}
+
+
+const rootElement = document.getElementById("root");
+ReactDOM.render(<App />, rootElement);
