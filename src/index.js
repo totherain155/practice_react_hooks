@@ -1,34 +1,36 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ReactDOM from "react-dom";
 
-// useConfirm 사용하여 console에 message 띄우기
+//useBeforeLeave , mouseleave, useEffect 사용 
 
-const useConfirm = (message = "", onConfirm, onCancel) => {
+const useBeforeLeave = (onBefore) => {
 
-    const confirmAction = () => {
-        if (window.confirm(message)) {
-            onConfirm()
-        } else {
-            onCancel()
+    const leave = (event) => {
+        const { clientY } = event
+        if (clientY <= 0) {
+            onBefore()
         }
-
     }
-    return confirmAction
+
+    useEffect(() => {
+        document.addEventListener("mouseleave", leave)
+        return () => {
+            document.removeEventListener("mouseleave", leave)
+        }
+    }, [])
 }
 
 
 const App = () => {
-    const deleteSome = () => {
-        console.log('good bye!')
+
+    const whenYouLeave = () => {
+        console.log("don't leave here")
     }
-    const stopOver = () => {
-        console.log('stop_over')
-    }
-    const deleteSomething = useConfirm("Are you sure to quit?", deleteSome, stopOver)
+    useBeforeLeave(whenYouLeave)
 
     return (
         <div>
-            <button onClick={deleteSomething}>DeleteButton</button>
+            <h2>Hi</h2>
         </div>
     )
 }
