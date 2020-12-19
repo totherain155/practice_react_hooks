@@ -5,22 +5,17 @@ import { unstable_concurrentAct } from "react-dom/test-utils";
 
 //useNetwork, useState, useEffect 사용 
 
-
 const useNetwork = (onChange) => {
-    const [status, setStatus] = useState(navigator.onLine)
+    const [status, setStatus] = useState(navigator.onLine);
 
     const handleChange = () => {
         if (typeof onChange === "function") {
             onChange(navigator.onLine)
-
         }
-
         setStatus(navigator.onLine)
     }
 
     useEffect(() => {
-
-
         window.addEventListener("online", handleChange)
         window.addEventListener("offline", handleChange)
         return () => {
@@ -28,18 +23,18 @@ const useNetwork = (onChange) => {
             window.removeEventListener("offline", handleChange)
         }
     }, [])
-
     return status
 }
 
+
 const App = () => {
-    const handleChangeNetwork = (online) => {
-        console.log(online ? "we went online" : "goodbye")
+    const changeNetwork = (online) => {
+        console.log(online ? "we are online" : "we are offline")
     }
-    const onLine = useNetwork(handleChangeNetwork)
+    const online = useNetwork(changeNetwork)
     return (
         <div>
-            <h2>{onLine ? "Hi again" : "goodbye"}</h2>
+            <h2>{online ? "online" : "offline"}</h2>
         </div>
     )
 }
