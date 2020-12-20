@@ -1,56 +1,41 @@
 import React, { useState, useEffect, useRef } from "react";
 import ReactDOM from "react-dom";
+import { unstable_concurrentAct } from "react-dom/cjs/react-dom-test-utils.development";
 
+//useFullscreen, useRef 사용 
 
 const useFullscreen = (callback) => {
-    const element = useRef();
-    const runCb = isFull => {
-        if (callback && typeof callback === "function") {
-            callback(isFull)
-        }
+    const element = useRef()
+    const runCb = (isFull) => {
+        callback(isFull)
     }
-    const triggerFull = () => {
+    const triggerFullscreen = () => {
         if (element.current) {
-            if (element.current.requestFullscreen) {
-                element.current.requestFullscreen()
-            } else if (element.current.mozRequestFullScreen) {
-                element.current.mozRequestFullScreen();
-            } else if (element.current.webkitRequestFullscreen) {
-                element.current.webkitRequestFullscreen()
-            } else if (element.current.msRequestFullscreen) {
-                element.current.msRequestFullscreen();
-            } /* 예를들어 firefox는 requestFullscreen()이 아니라 
-            mozRequestFullScreen()이다. opera는 webkit이고 Microsoft는 ms이다. */
+            element.current.requestFullscreen()
             runCb(true)
         }
+
     }
-    const exitFull = () => {
 
+    const exitFullscreen = () => {
         document.exitFullscreen()
+        runCb(false)
+    }
 
-        runCb(false);
-    };
-
-    return { element, triggerFull, exitFull };
+    return { element, triggerFullscreen, exitFullscreen };
 }
 
-
 const App = () => {
-    const onFulls = (isFull) => { //boolean type으로 받는다.
-        console.log(isFull ? "we are full" : "we are small")
+    const onFull = (isitFull) => {
+        console.log(isitFull ? "we are full" : "we are small")
     }
-
-    const { element, triggerFull, exitFull } = useFullscreen(onFulls)
+    const { element, triggerFullscreen, exitFullscreen } = useFullscreen(onFull)
     return (
-        <div className="App" style={{ height: "1000vh" }} >
-            <div ref={element}>
-                <img src="https://static7.depositphotos.com/1001651/762/i/950/depositphotos_7620905-stock-photo-big-and-small-apples-on.jpg" />
-            </div>
-
-            <button onClick={triggerFull}>Make fullscreen</button>
-            <button onClick={exitFull}>Exit fullscreen</button>
-
-        </div >
+        <div ref={element}>
+            <img src="https://d1aeri3ty3izns.cloudfront.net/media/23/235459/600/preview_4.jpg" />
+            <button onClick={triggerFullscreen}>MakeFullscreen</button>
+            <button onClick={exitFullscreen}>ExitFullscreen</button>
+        </div>
     )
 }
 
