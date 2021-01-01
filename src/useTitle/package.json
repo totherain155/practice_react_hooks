@@ -1,0 +1,17 @@
+{
+  "name": "@totherain155/use_title",
+  "version": "1.0.0",
+  "description": "react hook to update your title",
+  "main": "index.js",
+  "keywords": [
+    "react",
+    "hook",
+    "title"
+  ],
+  "author": "totherain <totherain@naver.com>",
+  "license": "MIT",
+  "peerDependencies": {
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
+  }
+}

@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import ReactDOM from "react-dom";
-import Axios from "axios"
-
-const useAxios = (axiosInstance = )
-
+import useTitle from "@totherain155/use_title"
 
 const App = () => {
-
+    return (
+        <div>
+            <h2>hi</h2>
+        </div>
+    )
 }
 
 

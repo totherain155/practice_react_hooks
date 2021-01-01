@@ -1,0 +1,25 @@
+{
+  "name": "@rainhooks/use-fadein",
+  "version": "1.0.0",
+  "description": "react hook to fadein",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/totherain155/practice_react_hooks.git"
+  },
+  "keywords": [
+    "react",
+    "hooks",
+    "fadein"
+  ],
+  "author": "totherain <totherain@naver.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/totherain155/practice_react_hooks/issues"
+  },
+  "homepage": "https://github.com/totherain155/practice_react_hooks#readme",
+  "peerDependencies": {
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
+  }
+}
