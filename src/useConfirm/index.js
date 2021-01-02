@@ -1,34 +1,45 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import ReactDOM from "react-dom";
 
-const useConfirm = (message = "", callback, rejection) => {
-    if (typeof callback !== "function") {
+//  delete button 클릭시 confirm message 띄우기
+
+const useConfirm = (message = "", onConfirm, onCancel) => {
+    if (!onConfirm || typeof onConfirm !== "function") {
+        return;
+    }
+    if (onCancel && typeof onCancel !== "function") {
         return;
     }
     const confirmAction = () => {
         if (window.confirm(message)) {
-            callback();
+            onConfirm();
         } else {
-            rejection();
+            onCancel();
         }
     };
     return confirmAction;
 };
 
 const App = () => {
-    const deleteWorld = () => {
-        console.log("Deleting the world..");
+    const confirmDelete = () => {
+        console.log("bye");
     };
-    const stop_over = () => {
-        console.log("stop_over")
-    }
-    const confirmDelete = useConfirm("Are you sure?", deleteWorld, stop_over);
+    const cancelAction = () => {
+        console.log("okok");
+    };
+    const DeleteWorld = useConfirm("are you sure", confirmDelete, cancelAction);
+
     return (
-        <div className="App">
-            <button onClick={confirmDelete}>Delete the world </button>
+        <div>
+            <button onClick={DeleteWorld}>delete_world</button>
         </div>
     );
 };
 
 const rootElement = document.getElementById("root");
-ReactDOM.render(<App />, rootElement);
+ReactDOM.render(
+    <React.StrictMode>
+        <App />
+    </React.StrictMode>,
+    rootElement
+);
