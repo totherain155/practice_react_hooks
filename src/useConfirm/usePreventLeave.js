@@ -1,30 +1,36 @@
+import React from "react";
+import ReactDOM from "react-dom";
 
-const usePreventLeave = () => {
+const usePrevent = () => {
+    const onClick = (event) => {
+        event.preventDefault();
+        event.returnValue = "";
+    };
 
+    const enablePrevent = () => {
+        window.addEventListener("beforeunload", onClick);
+    };
+    const disablePrevent = () => {
+        window.removeEventListener("beforeunload", onClick);
+    };
 
-    const listener = (event) => {
-        event.preventDefault()
-        event.returnValue = ""
-    }
-
-    const protect = () => {
-        window.addEventListener("beforeunload", listener)
-    }
-    const unprotect = () => {
-        window.removeEventListener("beforeunload", listener)
-
-    }
-    return { protect, unprotect }
-}
-
+    return { enablePrevent, disablePrevent };
+};
 
 const App = () => {
-    const { protect, unprotect } = usePreventLeave()
-
+    const { enablePrevent, disablePrevent } = usePrevent();
     return (
         <div>
-            <button onClick={protect}>Protect</button>
-            <button onClick={unprotect}>Unprotect</button>
+            <button onClick={enablePrevent}> protect </button>
+            <button onClick={disablePrevent}> unprotect</button>
         </div>
-    )
-}
+    );
+};
+
+const rootElement = document.getElementById("root");
+ReactDOM.render(
+    <React.StrictMode>
+        <App />
+    </React.StrictMode>,
+    rootElement
+);
