@@ -1,44 +1,39 @@
 import React, { useState, useEffect, useRef } from "react";
 import ReactDOM from "react-dom";
-import { unstable_concurrentAct } from "react-dom/test-utils";
-
-
-//useNetwork, useState, useEffect 사용 
 
 const useNetwork = (onChange) => {
     const [status, setStatus] = useState(navigator.onLine);
 
-    const handleChange = () => {
+    const handleNetwork = () => {
         if (typeof onChange === "function") {
-            onChange(navigator.onLine)
+            onChange(navigator.onLine);
         }
-        setStatus(navigator.onLine)
-    }
+        setStatus(navigator.onLine);
+    };
 
     useEffect(() => {
-        window.addEventListener("online", handleChange)
-        window.addEventListener("offline", handleChange)
+        window.addEventListener("online", handleNetwork);
+        window.addEventListener("offline", handleNetwork);
         return () => {
-            window.removeEventListener("online", handleChange)
-            window.removeEventListener("offline", handleChange)
-        }
-    }, [])
-    return status
-}
+            window.removeEventListener("online", handleNetwork);
+            window.removeEventListener("offline", handleNetwork);
+        };
+    }, []);
 
+    return status;
+};
 
 const App = () => {
-    const changeNetwork = (online) => {
-        console.log(online ? "we are online" : "we are offline")
-    }
-    const online = useNetwork(changeNetwork)
+    const networkChange = (online) => {
+        console.log(online ? "we are online" : "we are offline");
+    };
+    const onLine = useNetwork(networkChange);
     return (
         <div>
-            <h2>{online ? "online" : "offline"}</h2>
+            <h3>{onLine ? "online" : "offline"} </h3>
         </div>
-    )
-}
-
+    );
+};
 
 const rootElement = document.getElementById("root");
 ReactDOM.render(<App />, rootElement);
