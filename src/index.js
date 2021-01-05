@@ -5,7 +5,7 @@ import useTitle from "@totherain155/use_title"
 const App = () => {
     return (
         <div>
-            <h2>hi</h2>
+            <h2>hi_test</h2>
         </div>
     )
 }
