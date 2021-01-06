@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react"
+
 export const useTitle = (initTitle) => {
     const [title, setTitle] = useState(initTitle);
 
