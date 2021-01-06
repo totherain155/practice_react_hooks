@@ -1,39 +1,32 @@
 import React, { useState, useEffect, useRef } from "react";
 import ReactDOM from "react-dom";
 
-
-const useNotification = (title, option) => {
-
+const useNotification = (title, options) => {
     if (!("Notification" in window)) {
-        return
+        return;
     }
-    const makeNotif = () => {
+    const fireNotification = () => {
         if (Notification.permission !== "granted") {
-            Notification.requestPermission().then(permission => {
+            Notification.requestPermission((permission) => {
                 if (permission === "granted") {
-                    new Notification(title, option)
-                } else {
-                    return
+                    new Notification(title, options);
                 }
-            })
+            });
         } else {
-            new Notification(title, option)
+            new Notification(title, options);
         }
-    }
-    return makeNotif;
-}
-
+    };
+    return fireNotification;
+};
 
 const App = () => {
-    const triggerNotif = useNotification("you like music?", {
-        body: "yey"
-    })
+    const makeNotif = useNotification("you like movie?", { body: "sure" });
     return (
-        <div className="App" style={{ height: "1000vh" }}>
-            <button onClick={triggerNotif}>Hi</button>
+        <div>
+            <button onClick={makeNotif}> click here </button>
         </div>
-    )
-}
+    );
+};
 
 const rootElement = document.getElementById("root");
 ReactDOM.render(<App />, rootElement);
